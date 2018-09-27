@@ -1,13 +1,16 @@
 class Port < ApplicationRecord
-  validates :title, presence: true
-  validates :body, presence: true
-  validates :main_image, presence: true
-  validates :thumb_image, presence: true
+  validates :title, :body, :main_image, :thumb_image, presence: true
+  after_initialize :set_default
 
   def self.angular 
     where(subtitle: 'Angular')
   end
 
   scope :ruby_on_rails_portfolio_items, -> {where(subtitle: 'Ruby on rails')}
+
+  def set_default
+    self.main_image ||= 'https://via.placeholder.com/600*400'
+    self.thumb_image ||= 'https://via.placeholder.com/350x200'
+  end
 
 end
